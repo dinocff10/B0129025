@@ -1,0 +1,112 @@
+import os.path, sys
+import pygame.mixer, pygame.time
+import pygame
+from pygame.locals import *
+from sys import exit
+import os
+from random import *
+recv=pygame.event.get
+size=(800,600)
+side=(80,12)
+bat_point=(260,740)
+white=(255,255,255)
+SCREEN_DEFAULT_COLOR = (0, 0 ,0)
+
+
+rect_pos_end = (50,200)
+rect_color = (randint(0, 255), randint(0, 255), randint(0, 255))
+main_dir = 'C:\Users\dinocff10\Desktop'
+mixer = pygame.mixer
+time = pygame.time
+def main(file_path=None):
+    """Play an audio file as a buffered sound szzzample
+
+    Option argument:
+        the name of an audio file (default data/secosmic_low.wav
+
+    """
+    if file_path is None:
+        file_path = os.path.join(main_dir,
+                                 'data',
+                                 'boom.wav')
+
+    #choose a desired audio format
+    mixer.init(11025) #raises exception on fail
+    x=0
+
+    #load the sound    
+    sound = mixer.Sound(file_path)
+
+    pygame.init()
+    screen=pygame.display.set_mode(size,0,32)
+    screen.fill(SCREEN_DEFAULT_COLOR)
+    while 1:
+        
+        pygame.display.update()
+        for e in recv():
+            if e.type == QUIT:
+                pygame.quit()
+                return
+            if x == 800:
+                pygame.draw.rect(screen, (randint(0, 255),randint(0, 255),randint(0, 255)), Rect((0,0), (1000,1000)))
+                x=0    
+            if e.type == KEYDOWN:
+                if e.key == K_z:
+                    file_path = os.path.join(main_dir,
+                                 'data',
+                                 'drum1.wav')
+                    sound = mixer.Sound(file_path)
+                    sound.play()
+                    pygame.draw.rect(screen, (120,150,90), Rect((x,400), rect_pos_end))
+                    x=x+50
+                if e.key == K_x:
+                    file_path = os.path.join(main_dir,
+                                 'data',
+                                 'drum2.wav')
+                    sound = mixer.Sound(file_path)
+                    sound.play()
+                    pygame.draw.rect(screen, (170,170,63), Rect((x,300), rect_pos_end))
+                    x=x+50
+                if e.key == K_c:
+                    file_path = os.path.join(main_dir,
+                                 'data',
+                                 'drum3.wav')
+                    sound = mixer.Sound(file_path)
+                    sound.play()
+                    pygame.draw.rect(screen, (50,100,163), Rect((x,200), rect_pos_end))
+                    x=x+50
+                if e.key == K_v:
+                    file_path = os.path.join(main_dir,
+                                 'data',
+                                 'drum4.wav')
+                    sound = mixer.Sound(file_path)
+                    sound.play()
+                    pygame.draw.rect(screen, (200,17,63), Rect((x,250), rect_pos_end))
+                    x=x+50
+                if e.key == K_b:
+                    file_path = os.path.join(main_dir,
+                                 'data',
+                                 'drum5.wav')
+                    sound = mixer.Sound(file_path)
+                    sound.play()
+                    pygame.draw.rect(screen, (170,170,220), Rect((x,350), rect_pos_end))
+                    x=x+50
+                  
+    
+    
+
+
+    
+    print ('...Finished')
+
+    
+    sound = mixer.Sound(file_path)
+    channel = sound.play()
+    while channel.get_busy(): #still playing
+        print ('  ...still going...')
+        time.wait(1000)
+
+if __name__ == '__main__':
+ 
+        main()    
+
